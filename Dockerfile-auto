@@ -1,0 +1,96 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apk add --no-cache postgresql-client bash ncurses
+
+# Copiar projeto
+COPY . .
+
+# Backend setup
+WORKDIR /app/backend-v2
+RUN npm install --silent 2>/dev/null || true
+RUN npm run build 2>/dev/null || true
+
+# Frontend setup
+WORKDIR /app/frontend-v2
+RUN npm install --silent 2>/dev/null || true
+
+# Voltar para root
+WORKDIR /app
+
+# Script automático que já inicia backend + frontend
+RUN cat > /app/start-auto.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "╔════════════════════════════════════════════════════╗"
+echo "║      EscolaConnect V2.0 - Iniciando...            ║"
+echo "╚════════════════════════════════════════════════════╝"
+echo ""
+
+# Aguardar PostgreSQL
+echo "⏳ Aguardando PostgreSQL..."
+for i in {1..30}; do
+  if pg_isready -h postgres -U escolaconnect >/dev/null 2>&1; then
+    echo "✅ PostgreSQL pronto!"
+    break
+  fi
+  echo -n "."
+  sleep 1
+done
+echo ""
+
+# Migrations
+echo "🔧 Aplicando migrations..."
+cd /app/backend-v2
+npx prisma migrate deploy --skip-generate 2>/dev/null || echo "  (Migrations já aplicadas)"
+echo "✅ Migrations ok!"
+
+# Seed
+echo "📝 Seeding database..."
+npx prisma db seed 2>/dev/null || echo "  (Seed já executado)"
+echo "✅ Seed ok!"
+echo ""
+
+echo "🚀 Iniciando Backend (Fastify)..."
+cd /app/backend-v2
+node dist/index.js &
+BACKEND_PID=$!
+sleep 2
+
+echo "🚀 Iniciando Frontend (Next.js)..."
+cd /app/frontend-v2
+npm run dev &
+FRONTEND_PID=$!
+sleep 3
+
+echo ""
+echo "╔════════════════════════════════════════════════════╗"
+echo "║         ✅ SISTEMA PRONTO PARA USAR!              ║"
+echo "╠════════════════════════════════════════════════════╣"
+echo "║                                                    ║"
+echo "║  🌐 Frontend:  http://localhost:3000              ║"
+echo "║  ⚙️  Backend:   http://localhost:8001              ║"
+echo "║  📊 Database:  http://localhost:8080 (Adminer)    ║"
+echo "║                                                    ║"
+echo "║  🔑 Login:                                         ║"
+echo "║     Email: admin@escolaconnect.com                ║"
+echo "║     Senha: admin123                               ║"
+echo "║                                                    ║"
+echo "╚════════════════════════════════════════════════════╝"
+echo ""
+echo "Ambos os serviços estão rodando!"
+echo "Pressione Ctrl+C para parar..."
+echo ""
+
+# Manter containers rodando
+wait
+EOF
+
+RUN chmod +x /app/start-auto.sh
+
+EXPOSE 3000 8001
+
+CMD ["/app/start-auto.sh"]

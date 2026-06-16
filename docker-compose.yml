@@ -1,0 +1,80 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: escolaconnect-db
+    environment:
+      POSTGRES_USER: escolaconnect
+      POSTGRES_PASSWORD: escolaconnect123
+      POSTGRES_DB: escolaconnect
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U escolaconnect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - escolaconnect
+
+  adminer:
+    image: adminer:latest
+    container_name: escolaconnect-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - escolaconnect
+
+  backend:
+    build:
+      context: ./backend-node
+      dockerfile: Dockerfile
+    container_name: escolaconnect-backend
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: "postgresql://escolaconnect:escolaconnect123@postgres:5432/escolaconnect"
+      JWT_SECRET: "dev_secret_key_change_in_production"
+      NODE_ENV: development
+    volumes:
+      - ./backend-node:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - escolaconnect
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend-next
+      dockerfile: Dockerfile
+    container_name: escolaconnect-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8001"
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: "1234567890-mock.apps.googleusercontent.com"
+    volumes:
+      - ./frontend-next:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    networks:
+      - escolaconnect
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  escolaconnect:
+    driver: bridge

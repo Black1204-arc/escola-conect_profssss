@@ -1,0 +1,103 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apk add --no-cache postgresql-client bash ncurses
+
+# Copiar projeto
+COPY . .
+
+# Instalar dependências do backend
+WORKDIR /app/backend-v2
+RUN npm install
+RUN npm run build
+
+# Instalar dependências do frontend
+WORKDIR /app/frontend-v2
+RUN npm install
+
+# Voltar para root
+WORKDIR /app
+
+# Criar script de entrada
+RUN cat > /app/startup.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "╔════════════════════════════════════════════════════╗"
+echo "║   EscolaConnect V2.0 - Pronto para usar!          ║"
+echo "╚════════════════════════════════════════════════════╝"
+echo ""
+echo "⏳ Aguardando PostgreSQL..."
+for i in {1..30}; do
+  if pg_isready -h postgres -U escolaconnect 2>/dev/null; then
+    echo "✅ PostgreSQL conectado!"
+    break
+  fi
+  sleep 1
+done
+echo ""
+
+echo "🔧 Migrando database..."
+cd /app/backend-v2
+npx prisma migrate deploy --skip-generate 2>/dev/null || echo "Migrations já aplicadas"
+npx prisma db seed 2>/dev/null || echo "Seed já executado"
+echo "✅ Database pronto!"
+echo ""
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "ESCOLHA O QUE FAZER:"
+echo ""
+echo "  1) Iniciar Backend (porta 8001)"
+echo "  2) Iniciar Frontend (porta 3000)"
+echo "  3) Ambos (Backend + Frontend)"
+echo "  4) Shell bash"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+read -p "Digite uma opção (1-4): " opt
+
+case $opt in
+  1)
+    echo ""
+    echo "🚀 Backend rodando em http://localhost:8001"
+    echo ""
+    cd /app/backend-v2
+    node dist/index.js
+    ;;
+  2)
+    echo ""
+    echo "🚀 Frontend rodando em http://localhost:3000"
+    echo ""
+    cd /app/frontend-v2
+    npm run dev
+    ;;
+  3)
+    echo ""
+    echo "🚀 Ambos rodando!"
+    echo "   Backend:  http://localhost:8001"
+    echo "   Frontend: http://localhost:3000"
+    echo ""
+    cd /app/backend-v2
+    node dist/index.js &
+    cd /app/frontend-v2
+    npm run dev
+    ;;
+  4)
+    bash
+    ;;
+  *)
+    echo "Opção inválida"
+    bash
+    ;;
+esac
+EOF
+
+RUN chmod +x /app/startup.sh
+
+EXPOSE 3000 8001 5432 8080
+
+CMD ["/app/startup.sh"]

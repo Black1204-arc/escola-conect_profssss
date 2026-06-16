@@ -1,0 +1,239 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║      🎨 ESCOLACONNECT - GUIA DE CORES E TEMAS                 ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+
+🌞 TEMA LIGHT (Padrão)
+───────────────────────────────────────────────────────────────
+
+Cores Principais:
+├─ Fundo: #f8fafc (Cinza muito claro)
+├─ Card: #ffffff (Branco)
+├─ Texto: #1e293b (Cinza escuro)
+└─ Bordo: #e2e8f0 (Cinza claro)
+
+Cards do Dashboard:
+
+📊 Dashboard - Azul
+├─ Fundo: #eff6ff (Azul muito claro)
+├─ Ícone: 🎓 Azul (#3b82f6)
+├─ Valor: 0 (em azul escuro)
+└─ Label: Estatísticas (em azul)
+
+👥 Usuários - Azul
+├─ Fundo: #eff6ff
+├─ Ícone: 👥 (#3b82f6)
+└─ Cor: Azul
+
+🎓 Alunos - Verde
+├─ Fundo: #f0fdf4
+├─ Ícone: 🎓 (#16a34a)
+└─ Cor: Verde
+
+📚 Turmas - Amarelo
+├─ Fundo: #fef3c7
+├─ Ícone: 📚 (#f59e0b)
+└─ Cor: Laranja/Amarelo
+
+📝 Notas - Rosa
+├─ Fundo: #fce7f3
+├─ Ícone: 📝 (#ec4899)
+└─ Cor: Rosa
+
+Badges (Cores de Função):
+
+👨‍💼 Admin - Vermelho
+├─ Fundo: #fee2e2
+├─ Texto: #991b1b
+└─ Aparência: Vermelho claro
+
+👨‍🏫 Professor - Azul
+├─ Fundo: #dbeafe
+├─ Texto: #1e40af
+└─ Aparência: Azul claro
+
+🎓 Aluno - Verde
+├─ Fundo: #dcfce7
+├─ Texto: #166534
+└─ Aparência: Verde claro
+
+═══════════════════════════════════════════════════════════════
+
+🌙 TEMA DARK
+───────────────────────────────────────────────────────────────
+
+Para ativar: Clique no botão "🌙 Dark" no topo direito
+
+Cores Principais:
+├─ Fundo: #0f172a (Preto profundo)
+├─ Card: #1e293b (Cinza escuro)
+├─ Texto: #f1f5f9 (Branco)
+└─ Bordo: #334155 (Cinza médio)
+
+Cards do Dashboard (Tema Dark):
+
+📊 Dashboard - Azul Escuro
+├─ Fundo: #1e3a8a (Azul muito escuro)
+├─ Ícone: 👥 (#60a5fa)
+├─ Valor: Em azul claro (#bfdbfe)
+└─ Label: Em azul claro
+
+👥 Usuários - Azul Escuro
+├─ Fundo: #1e3a8a
+├─ Ícone: 👥 (#60a5fa)
+└─ Cor: Azul
+
+🎓 Alunos - Verde Escuro
+├─ Fundo: #1b4332
+├─ Ícone: 🎓 (#4ade80)
+└─ Cor: Verde
+
+📚 Turmas - Amarelo Escuro
+├─ Fundo: #78350f
+├─ Ícone: 📚 (#facc15)
+└─ Cor: Amarelo
+
+📝 Notas - Rosa Escuro
+├─ Fundo: #5b1e3d
+├─ Ícone: 📝 (#f472b6)
+└─ Cor: Rosa
+
+Badges (Tema Dark):
+
+👨‍💼 Admin - Vermelho Escuro
+├─ Fundo: #7f1d1d
+├─ Texto: #fca5a5
+└─ Aparência: Vermelho escuro
+
+👨‍🏫 Professor - Azul Escuro
+├─ Fundo: #1e3a8a
+├─ Texto: #93c5fd
+└─ Aparência: Azul escuro
+
+🎓 Aluno - Verde Escuro
+├─ Fundo: #1b4332
+├─ Texto: #86efac
+└─ Aparência: Verde escuro
+
+═══════════════════════════════════════════════════════════════
+
+🎯 COMO USAR OS TEMAS:
+───────────────────────────────────────────────────────────────
+
+1. Abra http://localhost:3000
+
+2. No topo direito do header, você verá:
+   ☀️ Light (quando está em tema escuro)
+   🌙 Dark  (quando está em tema claro)
+
+3. Clique no botão para alternar
+
+4. A página recarrega com as novas cores
+
+5. O tema é mantido na sessão (não persiste ao recarregar)
+
+═══════════════════════════════════════════════════════════════
+
+✨ EFEITOS VISUAIS:
+───────────────────────────────────────────────────────────────
+
+Ao passar o mouse:
+
+📌 Cards do Dashboard:
+   └─ Sobem 4px (elevação suave)
+   └─ Sombra aumenta
+   └─ Transição suave (0.3s)
+
+🖱️ Botões:
+   └─ Mudam de cor ao passar
+   └─ Aumentam 2% de tamanho
+   └─ Transição suave
+
+🔘 Abas:
+   └─ Ficam azuis ao passar
+   └─ Underline azul quando ativa
+   └─ Cor volta ao sair
+
+═══════════════════════════════════════════════════════════════
+
+🎨 PALETA DE CORES COMPLETA:
+───────────────────────────────────────────────────────────────
+
+AZUIS:
+├─ #3b82f6 (Azul primário)
+├─ #2563eb (Azul hover)
+├─ #1e40af (Azul escuro)
+└─ #0f172a (Azul muito escuro)
+
+VERDES:
+├─ #16a34a (Verde sucesso)
+├─ #15803d (Verde hover)
+├─ #166534 (Verde escuro)
+└─ #1b4332 (Verde muito escuro)
+
+VERMELHOS:
+├─ #dc2626 (Vermelho erro)
+├─ #991b1b (Vermelho escuro)
+└─ #7f1d1d (Vermelho muito escuro)
+
+AMARELOS:
+├─ #f59e0b (Amarelo/Laranja)
+├─ #92400e (Amarelo escuro)
+└─ #78350f (Amarelo muito escuro)
+
+ROSAS:
+├─ #ec4899 (Rosa primária)
+├─ #9f1239 (Rosa escuro)
+└─ #5b1e3d (Rosa muito escuro)
+
+CINZAS (Light):
+├─ #f8fafc (Fundo claro)
+├─ #ffffff (Branco puro)
+├─ #f3f4f6 (Cinza muito claro)
+├─ #e2e8f0 (Cinza claro)
+└─ #1e293b (Cinza escuro)
+
+CINZAS (Dark):
+├─ #0f172a (Preto profundo)
+├─ #1e293b (Cinza muito escuro)
+├─ #334155 (Cinza médio)
+└─ #f1f5f9 (Branco)
+
+═══════════════════════════════════════════════════════════════
+
+📋 PRÓXIMAS MELHORIAS DE CORES:
+───────────────────────────────────────────────────────────────
+
+Ideias para adicionar:
+☐ Mais temas (Ocean, Forest, Sunset, etc)
+☐ Paleta customizável
+☐ Salvar preferência de tema no localStorage
+☐ Auto-detectar tema do SO (preferência do usuário)
+☐ Gradientes nos cards
+☐ Animações ao trocar de tema
+☐ Cores diferentes por role (admin vê cores diferentes)
+
+═══════════════════════════════════════════════════════════════
+
+🎓 EXEMPLOS DE USO:
+
+Light Mode - Ideal para:
+✅ Uso durante o dia
+✅ Ambientes iluminados
+✅ Leitura confortável
+✅ Trabalho em sala
+
+Dark Mode - Ideal para:
+✅ Uso durante a noite
+✅ Ambientes escuros
+✅ Reduz cansaço visual
+✅ Economiza bateria (OLED)
+
+═══════════════════════════════════════════════════════════════
+
+Desenvolvido com ❤️ usando React Inline Styles
+
+═══════════════════════════════════════════════════════════════

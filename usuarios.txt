@@ -1,0 +1,26 @@
+Lista de Usuários Cadastrados (Padrão)
+======================================
+
+Estes são os usuários e e-mails que já vêm configurados por padrão no banco de dados (conforme o script init.sql):
+
+1. Administrador (Role: admin)
+   Nome: Administrador
+   E-mail: admin@escolaconnect.com
+   Senha: 123456 (Padrão)
+
+2. Professor (Role: professor)
+   Nome: Prof. João Silva
+   E-mail: professor@escola.com
+   Senha: 123456 (Padrão)
+
+3. Cantina (Role: cantineiro)
+   Nome: Cantineira Maria
+   E-mail: cantina@escola.com
+   Senha: 123456 (Padrão)
+
+4. Aluno (Role: aluno)
+   Nome: Aluno Pedro
+   E-mail: aluno@escola.com
+   Senha: 123456 (Padrão)
+
+* Nota: As senhas estão criptografadas no banco de dados. Caso não se lembre das senhas originais de teste (geralmente algo como 123456 ou admin123), você pode redefini-las diretamente pelo sistema ou atualizando as hashes no banco.

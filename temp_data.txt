@@ -1,0 +1,147 @@
+═══════════════════════════════════════════════════════════════
+  RELATÓRIO DE ANÁLISE AUTOMATIZADA DO CODEBASE
+  Gerado por: Agente Avaliador de Projeto Acadêmico
+═══════════════════════════════════════════════════════════════
+Data da análise: 06/04/2026 às 14:38:02
+
+═══ FRONTEND (frontend-next) ═══
+✅ package.json encontrado
+
+-- Dependências de Produção --
+  ✅ Next.js: 16.2.1
+  ❌ React: NÃO ENCONTRADO
+  ✅ React DOM: 19.2.4
+  ✅ TypeScript: ^5
+  ✅ TailwindCSS: ^4
+  ❌ Lucide React: NÃO ENCONTRADO
+  ❌ TipTap (React): NÃO ENCONTRADO
+  ❌ Prisma Client: NÃO ENCONTRADO
+  ❌ clsx: NÃO ENCONTRADO
+  ❌ tailwind-merge: NÃO ENCONTRADO
+  ❌ xlsx (SheetJS): NÃO ENCONTRADO
+  ❌ JsBarcode: NÃO ENCONTRADO
+  ❌ qrcode.react: NÃO ENCONTRADO
+  ✅ ESLint: eslint
+  ✅ ESLint Next Config: 16.2.1
+  ✅ TailwindCSS PostCSS: ^4
+  ❌ Prisma Adapter PG: NÃO ENCONTRADO
+  ❌ Prisma CLI: NÃO ENCONTRADO
+  ❌ ts-node: NÃO ENCONTRADO
+
+-- Dependências NÃO mapeadas (possíveis extras) --
+  ⚠️  EXTRA: dependencies (NÃO CONSTA NA LISTA OFICIAL)
+  ⚠️  EXTRA: devDependencies (NÃO CONSTA NA LISTA OFICIAL)
+
+═══ BACKEND (backend-node) ═══
+✅ package.json encontrado
+
+-- Dependências de Produção --
+  ❌ Fastify: NÃO ENCONTRADO
+  ✅ TypeScript: ^6.0.2
+  ✅ Prisma Client: ^7.5.0
+  ✅ Zod: ^4.3.6
+  ✅ bcryptjs: ^3.0.3
+  ❌ @fastify/multipart: NÃO ENCONTRADO
+  ✅ @fastify/cors: ^11.2.0
+  ❌ PDFKit: NÃO ENCONTRADO
+  ❌ pg (node-postgres): NÃO ENCONTRADO
+  ✅ dotenv: ^17.3.1
+  ❌ Vitest: NÃO ENCONTRADO
+  ❌ ts-node-dev: NÃO ENCONTRADO
+  ❌ Prisma Adapter PG: NÃO ENCONTRADO
+  ❌ Prisma CLI: NÃO ENCONTRADO
+  ❌ Fastify Zod Provider: NÃO ENCONTRADO
+
+-- Dependências NÃO mapeadas (possíveis extras) --
+  ⚠️  EXTRA:  && exit 1 (NÃO CONSTA NA LISTA OFICIAL)
+  ⚠️  EXTRA: dependencies (NÃO CONSTA NA LISTA OFICIAL)
+  ⚠️  EXTRA: devDependencies (NÃO CONSTA NA LISTA OFICIAL)
+
+═══ INFRAESTRUTURA ═══
+✅ docker-compose.yml encontrado
+   Containers definidos: 3
+   - escolaconnect-mongo
+   - escolaconnect-backend
+   - escolaconnect-frontend
+
+-- Dockerfiles --
+  ✅ frontend-next/Dockerfile presente
+  ✅ backend-node/Dockerfile presente
+
+-- Banco de Dados --
+  ❌ Imagem Bitnami PostgreSQL NÃO encontrada
+
+-- Reverse Proxy --
+  ✅ Nginx conf.d/ encontrado
+    - default.conf
+
+-- Segurança SSL --
+  ⚠️  Configuração SSL/Certbot NÃO detectada localmente (pode estar apenas na VPS)
+
+-- Versionamento --
+  ✅ Repositório Git inicializado
+  ❌ Nenhum remote configurado
+  📊 Total de commits: 61
+  📅 Primeiro commit: 2026-02-26
+  📅 Último commit: 2026-03-05
+
+  -- Últimos 10 commits --
+    269a253 | 2026-03-05 | auto-commit for add3a741-6c13-4887-8d66-15c989ce13be
+    3bfb731 | 2026-03-05 | auto-commit for 0d8d22b6-c561-460b-a9a3-b9bfb8a91b77
+    1dbe222 | 2026-03-05 | Auto-commit before changes
+    b56bb97 | 2026-03-05 | auto-commit for 16fa3061-a535-4560-9900-629f73ee4a35
+    ba278c7 | 2026-03-05 | auto-commit for dd01eb08-3df3-4897-b300-6f3a78caefeb
+    defd7b1 | 2026-03-05 | auto-commit for bd13f229-d0ab-4014-832b-94d1fab00b1c
+    c1d12a4 | 2026-03-05 | auto-commit for 16d9367f-d9cc-4e80-ba07-3e3e1d6012de
+    1085ef4 | 2026-03-05 | auto-commit for 61b3384c-8190-4001-98eb-be914c9811ee
+    815d354 | 2026-03-05 | auto-commit for 244f720a-41db-4543-93b7-8c1560be3498
+    1d3fc53 | 2026-03-05 | auto-commit for 62250bcc-49e7-4436-8d63-2bfdccadacfa
+
+═══ ARQUITETURA ═══
+-- Estrutura Frontend --
+  📁 Rotas (pages): 16
+    /aluno
+    /cantineiro
+    /login
+    /
+    /professor
+
+  📦 Total de componentes (.tsx): 14
+  📂 Diretórios de componentes:
+    /admin/ (11 arquivos .tsx)
+    /modals/ (2 arquivos .tsx)
+
+-- Estrutura Backend --
+  📂 Diretórios em src/:
+  🔀 Arquivos de rotas: 0
+  ⚠️  Padrão Vertical Slice não detectado por convenção de diretório
+
+-- ORM Prisma --
+  ❌ frontend-next/prisma/schema.prisma NÃO encontrado
+  ✅ backend-node/prisma/schema.prisma (9 modelos)
+    - model User {
+    - model Configuracao {
+    - model Turma {
+    - model Disciplina {
+    - model Nota {
+    - model Falta {
+    - model Cardapio {
+    - model Mensagem {
+    - model Observacao {
+
+═══ MÉTRICAS GERAIS ═══
+-- Contagem de Arquivos --
+  .tsx: 33 arquivos
+  .ts: 1 arquivos
+  .css: 1 arquivos
+  .json: 0 arquivos
+
+-- Linhas de Código (aproximado) --
+  frontend-next: ~2786 linhas TypeScript
+  backend-node: ~335/mnt/c/Users/Dev2/Documents/projetos/EscolaConect/backend-node/src/server.ts linhas TypeScript
+
+-- Backup --
+  ❌ Container de backup NÃO configurado
+
+═══ FIM DA ANÁLISE AUTOMATIZADA ═══
+

@@ -1,0 +1,81 @@
+﻿=== 3.1 Classifica├º├úo Arquitetural do Frontend ===
+Arquivos grandes (>500 linhas):
+  2786 total
+   243 frontend-next/src/components/modals/TurmaDetailModal.tsx
+   220 frontend-next/src/components/admin/CreateUser.tsx
+   197 frontend-next/src/components/admin/Messages.tsx
+   182 frontend-next/src/components/admin/UserManager.tsx
+   178 frontend-next/src/components/modals/UserDetailModal.tsx
+   144 frontend-next/src/components/admin/SystemSettings.tsx
+   144 frontend-next/src/components/admin/ClassManager.tsx
+   142 frontend-next/src/components/admin/CantineSettings.tsx
+   138 frontend-next/src/components/admin/PendingApprovals.tsx
+   108 frontend-next/src/components/admin/Statistics.tsx
+   103 frontend-next/src/app/login/page.tsx
+   101 frontend-next/src/components/admin/Promotions.tsx
+    84 frontend-next/src/app/professor/page.tsx
+    79 frontend-next/src/app/aluno/page.tsx
+
+Dynamic imports / Lazy loading:
+frontend-next/src/app/admin/approvals/page.tsx:3:const PendingApprovals = dynamic(() => import('@/components/admin/PendingApprovals'), {
+frontend-next/src/app/admin/cantine/page.tsx:3:const CantineSettings = dynamic(() => import('@/components/admin/CantineSettings'), {
+frontend-next/src/app/admin/classes/page.tsx:3:const ClassManager = dynamic(() => import('@/components/admin/ClassManager'), {
+frontend-next/src/app/admin/create-user/page.tsx:3:const CreateUser = dynamic(() => import('@/components/admin/CreateUser'), {
+frontend-next/src/app/admin/failed/page.tsx:3:const FailedStudents = dynamic(() => import('@/components/admin/FailedStudents'), {
+frontend-next/src/app/admin/grades/page.tsx:3:const GradeManager = dynamic(() => import('@/components/admin/GradeManager'), {
+frontend-next/src/app/admin/messages/page.tsx:3:const Messages = dynamic(() => import('@/components/admin/Messages'), {
+frontend-next/src/app/admin/promotions/page.tsx:3:const Promotions = dynamic(() => import('@/components/admin/Promotions'), {
+frontend-next/src/app/admin/settings/page.tsx:3:const SystemSettings = dynamic(() => import('@/components/admin/SystemSettings'), {
+frontend-next/src/app/admin/statistics/page.tsx:3:const Statistics = dynamic(() => import('@/components/admin/Statistics'), {
+
+Componentes por diret├│rio:
+     11 frontend-next/src/components/admin
+      2 frontend-next/src/components/modals
+      1 frontend-next/src/components
+
+=== 3.2 Extra├º├úo de Componentes ===
+Subcomponentes importados entre si (contagem):
+2
+Subdiret├│rios em components:
+frontend-next/src/components/admin
+frontend-next/src/components/modals
+
+=== 3.3 Roteamento Aninhado Nativo (Nested Routing) ===
+Estrutura de rotas aninhadas - profundidade m├íxima:
+5 frontend-next/src/app/admin/users/page.tsx
+5 frontend-next/src/app/admin/statistics/page.tsx
+5 frontend-next/src/app/admin/settings/page.tsx
+5 frontend-next/src/app/admin/promotions/page.tsx
+5 frontend-next/src/app/admin/messages/page.tsx
+
+=== 3.4 Vertical Slice no Backend ===
+Estrutura do backend (diret├│rios raiz):
+Tamanho do server.ts:
+335 backend-node/src/server.ts
+
+=== 3.5 Banco de Dados ===
+Modelos no Prisma schema API:
+9
+Atributos totais no Prisma schema API:
+62
+Configura├º├úo do BD no Docker (trecho):
+
+=== 3.6 Formul├írios e Comunica├º├úo com o Banco de Dados ===
+Formul├írios no frontend (contagem):
+6
+Chamadas fetch/POST/PUT/DELETE/PATCH (contagem):
+46
+Rotas de create/insert no backend (contagem):
+4
+
+=== 3.7 Sistema de Roles e Permiss├Áes ===
+Modelos de Role/Perfil no Schema:
+Middleware/Guards no backend (contagem):
+32
+
+=== 3.8 Verifica├º├Áes Complementares ===
+Docker services:
+services:
+  mongodb:
+Nginx Certbot/SSL:
+Certbot n├úo encontrado na config local

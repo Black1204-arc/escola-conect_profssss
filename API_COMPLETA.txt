@@ -1,0 +1,407 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║       📚 ESCOLACONNECT - DOCUMENTAÇÃO COMPLETA DE API          ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+BASE URL: http://localhost:8001
+
+═══════════════════════════════════════════════════════════════
+
+🏥 HEALTH & STATUS
+───────────────────────────────────────────────────────────────
+
+GET /api/
+├─ Descrição: Health check da API
+├─ Resposta:
+│  {
+│    "status": "ok",
+│    "message": "🎓 EscolaConnect API",
+│    "version": "1.0.0"
+│  }
+└─ Exemplo:
+   curl http://localhost:8001/api/
+
+GET /api/stats
+├─ Descrição: Obter estatísticas do sistema
+├─ Resposta:
+│  {
+│    "users": 3,
+│    "students": 5,
+│    "classes": 2,
+│    "grades": 15
+│  }
+└─ Exemplo:
+   curl http://localhost:8001/api/stats
+
+═══════════════════════════════════════════════════════════════
+
+👥 USUÁRIOS - CRUD COMPLETO
+───────────────────────────────────────────────────────────────
+
+GET /api/users
+├─ Descrição: Listar todos os usuários
+├─ Resposta:
+│  [
+│    {
+│      "id": "507f1f77bcf86cd799439011",
+│      "name": "João Silva",
+│      "email": "joao@example.com",
+│      "role": "teacher"
+│    }
+│  ]
+└─ Exemplo:
+   curl http://localhost:8001/api/users
+
+POST /api/users
+├─ Descrição: Criar novo usuário
+├─ Body (JSON):
+│  {
+│    "name": "Maria Santos",
+│    "email": "maria@example.com",
+│    "role": "admin"
+│  }
+├─ Roles válidos: admin, teacher, student
+├─ Resposta: Usuário criado
+└─ Exemplo:
+   curl -X POST http://localhost:8001/api/users \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Maria Santos","email":"maria@example.com","role":"admin"}'
+
+GET /api/users/{user_id}
+├─ Descrição: Obter usuário específico
+├─ Parâmetro: user_id (MongoDB ObjectId)
+├─ Resposta: Usuário encontrado
+└─ Exemplo:
+   curl http://localhost:8001/api/users/507f1f77bcf86cd799439011
+
+PUT /api/users/{user_id}
+├─ Descrição: Atualizar usuário
+├─ Parâmetro: user_id (MongoDB ObjectId)
+├─ Body (JSON): Campos a atualizar
+│  {
+│    "name": "João Silva Atualizado",
+│    "role": "teacher"
+│  }
+├─ Resposta: {"message": "Usuário atualizado com sucesso"}
+└─ Exemplo:
+   curl -X PUT http://localhost:8001/api/users/507f1f77bcf86cd799439011 \
+     -H "Content-Type: application/json" \
+     -d '{"name":"João Silva Atualizado"}'
+
+DELETE /api/users/{user_id}
+├─ Descrição: Deletar usuário
+├─ Parâmetro: user_id (MongoDB ObjectId)
+├─ Resposta: {"message": "Usuário deletado com sucesso"}
+└─ Exemplo:
+   curl -X DELETE http://localhost:8001/api/users/507f1f77bcf86cd799439011
+
+GET /api/users/by-role/{role}
+├─ Descrição: Listar usuários por função
+├─ Parâmetro: role (admin, teacher, student)
+├─ Resposta: Lista de usuários com esse role
+└─ Exemplo:
+   curl http://localhost:8001/api/users/by-role/teacher
+
+═══════════════════════════════════════════════════════════════
+
+🎓 ALUNOS - CRUD COMPLETO
+───────────────────────────────────────────────────────────────
+
+GET /api/students
+├─ Descrição: Listar todos os alunos
+├─ Resposta:
+│  [
+│    {
+│      "id": "507f1f77bcf86cd799439012",
+│      "name": "Ana Costa",
+│      "matricula": "2024001",
+│      "class": "9º A"
+│    }
+│  ]
+└─ Exemplo:
+   curl http://localhost:8001/api/students
+
+POST /api/students
+├─ Descrição: Criar novo aluno
+├─ Body (JSON):
+│  {
+│    "name": "Bruno Lima",
+│    "matricula": "2024002",
+│    "class": "9º B"
+│  }
+├─ Campos obrigatórios: name, matricula
+├─ Resposta: Aluno criado
+└─ Exemplo:
+   curl -X POST http://localhost:8001/api/students \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Bruno Lima","matricula":"2024002","class":"9º B"}'
+
+GET /api/students/{student_id}
+├─ Descrição: Obter aluno específico
+├─ Resposta: Aluno encontrado
+└─ Exemplo:
+   curl http://localhost:8001/api/students/507f1f77bcf86cd799439012
+
+PUT /api/students/{student_id}
+├─ Descrição: Atualizar aluno
+├─ Body (JSON): Campos a atualizar
+└─ Exemplo:
+   curl -X PUT http://localhost:8001/api/students/507f1f77bcf86cd799439012 \
+     -H "Content-Type: application/json" \
+     -d '{"class":"9º A"}'
+
+DELETE /api/students/{student_id}
+├─ Descrição: Deletar aluno
+├─ Resposta: {"message": "Aluno deletado com sucesso"}
+└─ Exemplo:
+   curl -X DELETE http://localhost:8001/api/students/507f1f77bcf86cd799439012
+
+GET /api/students/by-class/{class_name}
+├─ Descrição: Listar alunos de uma turma
+├─ Parâmetro: class_name (ex: "9º A")
+├─ Resposta: Lista de alunos da turma
+└─ Exemplo:
+   curl http://localhost:8001/api/students/by-class/9º%20A
+
+═══════════════════════════════════════════════════════════════
+
+📚 TURMAS - CRUD COMPLETO
+───────────────────────────────────────────────────────────────
+
+GET /api/classes
+├─ Descrição: Listar todas as turmas
+├─ Resposta:
+│  [
+│    {
+│      "id": "507f1f77bcf86cd799439013",
+│      "name": "9º A",
+│      "year": "2024",
+│      "teacher": "João Silva"
+│    }
+│  ]
+└─ Exemplo:
+   curl http://localhost:8001/api/classes
+
+POST /api/classes
+├─ Descrição: Criar nova turma
+├─ Body (JSON):
+│  {
+│    "name": "9º B",
+│    "year": "2024",
+│    "teacher": "Maria Santos"
+│  }
+├─ Campo obrigatório: name
+├─ Resposta: Turma criada
+└─ Exemplo:
+   curl -X POST http://localhost:8001/api/classes \
+     -H "Content-Type: application/json" \
+     -d '{"name":"9º B","year":"2024","teacher":"Maria Santos"}'
+
+GET /api/classes/{class_id}
+├─ Descrição: Obter turma específica
+└─ Exemplo:
+   curl http://localhost:8001/api/classes/507f1f77bcf86cd799439013
+
+PUT /api/classes/{class_id}
+├─ Descrição: Atualizar turma
+└─ Exemplo:
+   curl -X PUT http://localhost:8001/api/classes/507f1f77bcf86cd799439013 \
+     -H "Content-Type: application/json" \
+     -d '{"teacher":"Carlos Silva"}'
+
+DELETE /api/classes/{class_id}
+├─ Descrição: Deletar turma
+└─ Exemplo:
+   curl -X DELETE http://localhost:8001/api/classes/507f1f77bcf86cd799439013
+
+═══════════════════════════════════════════════════════════════
+
+📝 NOTAS - CRUD COMPLETO
+───────────────────────────────────────────────────────────────
+
+GET /api/grades
+├─ Descrição: Listar todas as notas
+├─ Resposta:
+│  [
+│    {
+│      "id": "507f1f77bcf86cd799439014",
+│      "student": "Ana Costa",
+│      "subject": "Matemática",
+│      "grade": 8.5
+│    }
+│  ]
+└─ Exemplo:
+   curl http://localhost:8001/api/grades
+
+POST /api/grades
+├─ Descrição: Lançar nota
+├─ Body (JSON):
+│  {
+│    "student": "Ana Costa",
+│    "subject": "Matemática",
+│    "grade": 8.5
+│  }
+├─ Campos obrigatórios: student, grade
+├─ Resposta: Nota criada
+└─ Exemplo:
+   curl -X POST http://localhost:8001/api/grades \
+     -H "Content-Type: application/json" \
+     -d '{"student":"Ana Costa","subject":"Matemática","grade":8.5}'
+
+GET /api/grades/{grade_id}
+├─ Descrição: Obter nota específica
+└─ Exemplo:
+   curl http://localhost:8001/api/grades/507f1f77bcf86cd799439014
+
+PUT /api/grades/{grade_id}
+├─ Descrição: Atualizar nota
+└─ Exemplo:
+   curl -X PUT http://localhost:8001/api/grades/507f1f77bcf86cd799439014 \
+     -H "Content-Type: application/json" \
+     -d '{"grade":9.0}'
+
+DELETE /api/grades/{grade_id}
+├─ Descrição: Deletar nota
+└─ Exemplo:
+   curl -X DELETE http://localhost:8001/api/grades/507f1f77bcf86cd799439014
+
+GET /api/grades/by-student/{student_id}
+├─ Descrição: Listar notas de um aluno
+├─ Parâmetro: student_id (MongoDB ObjectId)
+├─ Resposta: Lista de notas do aluno
+└─ Exemplo:
+   curl http://localhost:8001/api/grades/by-student/507f1f77bcf86cd799439012
+
+═══════════════════════════════════════════════════════════════
+
+🧪 EXEMPLOS COM PYTHON:
+───────────────────────────────────────────────────────────────
+
+# Listar usuários
+import requests
+response = requests.get('http://localhost:8001/api/users')
+print(response.json())
+
+# Criar usuário
+user_data = {
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "role": "teacher"
+}
+response = requests.post('http://localhost:8001/api/users', json=user_data)
+print(response.json())
+
+# Obter usuário específico
+user_id = "507f1f77bcf86cd799439011"
+response = requests.get(f'http://localhost:8001/api/users/{user_id}')
+print(response.json())
+
+# Atualizar usuário
+update_data = {"name": "João Silva Novo"}
+response = requests.put(
+    f'http://localhost:8001/api/users/{user_id}',
+    json=update_data
+)
+print(response.json())
+
+# Deletar usuário
+response = requests.delete(f'http://localhost:8001/api/users/{user_id}')
+print(response.json())
+
+═══════════════════════════════════════════════════════════════
+
+🧪 EXEMPLOS COM JAVASCRIPT/FETCH:
+───────────────────────────────────────────────────────────────
+
+// Listar usuários
+fetch('http://localhost:8001/api/users')
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+// Criar usuário
+fetch('http://localhost:8001/api/users', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    name: 'João Silva',
+    email: 'joao@example.com',
+    role: 'teacher'
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data));
+
+// Atualizar usuário
+fetch('http://localhost:8001/api/users/507f1f77bcf86cd799439011', {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'João Silva Novo' })
+})
+.then(res => res.json())
+.then(data => console.log(data));
+
+// Deletar usuário
+fetch('http://localhost:8001/api/users/507f1f77bcf86cd799439011', {
+  method: 'DELETE'
+})
+.then(res => res.json())
+.then(data => console.log(data));
+
+═══════════════════════════════════════════════════════════════
+
+✅ CÓDIGOS HTTP:
+───────────────────────────────────────────────────────────────
+
+200 - OK (sucesso)
+201 - Created (recurso criado)
+400 - Bad Request (erro na requisição)
+404 - Not Found (recurso não encontrado)
+500 - Internal Server Error (erro no servidor)
+
+═══════════════════════════════════════════════════════════════
+
+📊 RESUMO DE ENDPOINTS:
+
+USUÁRIOS (5 endpoints):
+├─ GET    /api/users              (listar)
+├─ POST   /api/users              (criar)
+├─ GET    /api/users/{id}         (obter)
+├─ PUT    /api/users/{id}         (atualizar)
+├─ DELETE /api/users/{id}         (deletar)
+└─ GET    /api/users/by-role/{role} (filtrar por função)
+
+ALUNOS (5 endpoints):
+├─ GET    /api/students           (listar)
+├─ POST   /api/students           (criar)
+├─ GET    /api/students/{id}      (obter)
+├─ PUT    /api/students/{id}      (atualizar)
+├─ DELETE /api/students/{id}      (deletar)
+└─ GET    /api/students/by-class/{class} (filtrar por turma)
+
+TURMAS (5 endpoints):
+├─ GET    /api/classes            (listar)
+├─ POST   /api/classes            (criar)
+├─ GET    /api/classes/{id}       (obter)
+├─ PUT    /api/classes/{id}       (atualizar)
+└─ DELETE /api/classes/{id}       (deletar)
+
+NOTAS (5 endpoints):
+├─ GET    /api/grades             (listar)
+├─ POST   /api/grades             (criar)
+├─ GET    /api/grades/{id}        (obter)
+├─ PUT    /api/grades/{id}        (atualizar)
+├─ DELETE /api/grades/{id}        (deletar)
+└─ GET    /api/grades/by-student/{id} (filtrar por aluno)
+
+HEALTH (2 endpoints):
+├─ GET    /api/                   (health check)
+└─ GET    /api/stats              (estatísticas)
+
+TOTAL: 27 ENDPOINTS
+
+═══════════════════════════════════════════════════════════════
+
+Desenvolvido com ❤️ usando FastAPI + Motor + MongoDB
+
+═══════════════════════════════════════════════════════════════

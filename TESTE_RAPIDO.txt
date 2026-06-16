@@ -1,0 +1,161 @@
+🎓 **COMO TESTAR A UI DO ESCOLACONNECT**
+
+═══════════════════════════════════════════════════════════════
+
+## ⚡ SUPER RÁPIDO (2 minutos):
+
+1. **Abra o browser**:
+   → http://localhost:3000
+
+2. **Você verá**:
+   ┌─────────────────────────────────────────┐
+   │ 🎓 EscolaConnect                        │
+   │ Sistema de Gestão Escolar               │
+   ├─────────────────────────────────────────┤
+   │ 📊 Dashboard │ 👥 Usuários │ 🎓 Alunos │
+   ├─────────────────────────────────────────┤
+   │                                         │
+   │  👥 Usuários: 0    🎓 Alunos: 0       │
+   │  📚 Turmas: 0      📝 Notas: 0        │
+   │                                         │
+   └─────────────────────────────────────────┘
+
+3. **Clique em "Usuários"** e preencha:
+   ┌─────────────────────────────────────────┐
+   │ Nome:        [João Silva           ]   │
+   │ Email:       [joao@example.com     ]   │
+   │ Função:      [Professor ▼]             │
+   │                  [Adicionar Usuário]   │
+   └─────────────────────────────────────────┘
+
+4. **Clique "Adicionar Usuário"** → Aparece na tabela!
+
+5. **Clique em "Alunos"** e preencha:
+   ┌─────────────────────────────────────────┐
+   │ Nome:        [Ana Costa            ]   │
+   │ Matrícula:   [2024001             ]   │
+   │ Turma:       [9º A                ]   │
+   │                  [Adicionar Aluno]    │
+   └─────────────────────────────────────────┘
+
+6. **Volte para "Dashboard"** → Veja números atualizados!
+
+═══════════════════════════════════════════════════════════════
+
+## 📋 TESTE DETALHADO:
+
+### Teste 1️⃣: Dashboard
+□ Abre sem erros
+□ Mostra 4 cards (Usuários, Alunos, Turmas, Notas)
+□ Cada card tem um ícone (👥 🎓 📚 📝)
+
+### Teste 2️⃣: Criar Usuários
+□ Clica em "Usuários"
+□ Preenche formulário com:
+  • Nome: Maria Santos
+  • Email: maria@example.com
+  • Função: Admin
+□ Clica "Adicionar"
+□ Aparece na tabela com badge vermelho (Admin)
+
+### Teste 3️⃣: Criar Mais Usuários
+□ Cria 2º usuário:
+  • Nome: Pedro Alves
+  • Email: pedro@example.com
+  • Função: Aluno
+□ Cria 3º usuário:
+  • Nome: Carlos Silva
+  • Email: carlos@example.com
+  • Função: Professor
+
+### Teste 4️⃣: Criar Alunos
+□ Clica em "Alunos"
+□ Preenche formulário com:
+  • Nome: Bruno Costa
+  • Matrícula: 2024-101
+  • Turma: 8º B
+□ Clica "Adicionar"
+□ Aparece na tabela
+
+### Teste 5️⃣: Dados Persistem
+□ Clica em "Usuários" → Os 3 usuários estão lá
+□ Clica em "Alunos" → O aluno está lá
+□ Volta para "Dashboard" → Números atualizaram
+
+### Teste 6️⃣: Responsividade
+□ Abre DevTools (F12)
+□ Clica no ícone de Mobile (📱)
+□ Seleciona iPhone 12
+□ Verifica:
+  • Header está responsivo
+  • Formulários em coluna única
+  • Tabelas com scroll
+
+### Teste 7️⃣: Hot-Reload
+□ Edita frontend/src/App.js
+□ Muda "EscolaConnect" para "EscolaConnect v2"
+□ Salva (Ctrl+S)
+□ Browser recarrega automaticamente
+□ Novo texto aparece
+
+### Teste 8️⃣: Persistência
+□ Restart containers:
+   docker-compose down
+   docker-compose up -d
+□ Abre http://localhost:3000 de novo
+□ Dados ainda estão lá ✅
+
+═══════════════════════════════════════════════════════════════
+
+## 🔧 COMANDOS ÚTEIS:
+
+Terminal 1 (Dev com hot-reload):
+$ docker-compose watch
+
+Terminal 2 (Ver logs):
+$ docker-compose logs -f frontend
+$ docker-compose logs -f backend
+
+Terminal 3 (Testar API):
+$ curl http://localhost:8001/api/
+$ curl http://localhost:8001/api/stats
+$ curl http://localhost:8001/api/users
+
+═══════════════════════════════════════════════════════════════
+
+## ✅ RESULTADO ESPERADO:
+
+Dashboard:
+┌────────────────────┬────────────────────┐
+│ 👥 Usuários: 3     │ 🎓 Alunos: 1       │
+├────────────────────┼────────────────────┤
+│ 📚 Turmas: 0       │ 📝 Notas: 0        │
+└────────────────────┴────────────────────┘
+
+Usuários Tabela:
+┌──────────────────┬─────────────────────┬─────────────┐
+│ Nome             │ Email               │ Função      │
+├──────────────────┼─────────────────────┼─────────────┤
+│ Maria Santos     │ maria@example.com   │ 👨‍💼 Admin    │
+│ Pedro Alves      │ pedro@example.com   │ 🎓 Aluno    │
+│ Carlos Silva     │ carlos@example.com  │ 👨‍🏫 Professor│
+└──────────────────┴─────────────────────┴─────────────┘
+
+Alunos Tabela:
+┌──────────────────┬──────────────┬────────┐
+│ Nome             │ Matrícula    │ Turma  │
+├──────────────────┼──────────────┼────────┤
+│ Bruno Costa      │ 2024-101     │ 8º B   │
+└──────────────────┴──────────────┴────────┘
+
+═══════════════════════════════════════════════════════════════
+
+Se tudo passou ✅ → A aplicação está 100% funcional!
+
+Próximos passos:
+• Adicione mais features (Notas, Turmas, etc)
+• Implemente autenticação/login
+• Deploy na nuvem (Docker Hub, AWS, Heroku)
+• Adicione testes automatizados
+
+═══════════════════════════════════════════════════════════════

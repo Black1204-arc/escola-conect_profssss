@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: escolaconnect-postgres-v2
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: escolaconnect
+      POSTGRES_PASSWORD: escolaconnect123
+      POSTGRES_DB: escolaconnect
+    volumes:
+      - postgres_data_v2:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "escolaconnect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - escolaconnect-v2
+
+  # Fastify Backend V2.0
+  backend-v2:
+    build:
+      context: ./backend-v2
+      dockerfile: Dockerfile
+    container_name: escolaconnect-backend-v2
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: "postgresql://escolaconnect:escolaconnect123@postgres:5432/escolaconnect"
+      JWT_SECRET: "dev_secret_key_change_in_production_v2"
+      NODE_ENV: development
+      PORT: 8001
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - escolaconnect-v2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-v2/src
+          target: /app/src
+        - action: rebuild
+          path: ./backend-v2/package.json
+
+  # Next.js Frontend V2.0
+  frontend-v2:
+    build:
+      context: ./frontend-v2
+      dockerfile: Dockerfile
+    container_name: escolaconnect-frontend-v2
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8001/api"
+      NODE_ENV: development
+    depends_on:
+      backend-v2:
+        condition: service_healthy
+    networks:
+      - escolaconnect-v2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend-v2/app
+          target: /app/app
+        - action: sync
+          path: ./frontend-v2/components
+          target: /app/components
+        - action: sync
+          path: ./frontend-v2/lib
+          target: /app/lib
+        - action: rebuild
+          path: ./frontend-v2/package.json
+
+  # Adminer for Database Management (optional)
+  adminer:
+    image: adminer:latest
+    container_name: escolaconnect-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - escolaconnect-v2
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+
+volumes:
+  postgres_data_v2:
+    driver: local
+
+networks:
+  escolaconnect-v2:
+    driver: bridge

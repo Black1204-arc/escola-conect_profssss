@@ -1,0 +1,79 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# System dependencies for Prisma
+RUN apk add --no-cache postgresql-client bash curl openssl openssl-dev
+
+# Copy entire project
+COPY . .
+
+# Build backend
+WORKDIR /app/backend-v2
+RUN npm ci --silent
+RUN npm run build
+
+# Build frontend  
+WORKDIR /app/frontend-v2
+RUN npm ci --silent
+RUN npm run build
+
+# Back to root
+WORKDIR /app
+
+# Create startup script
+RUN cat > /entrypoint.sh << 'SCRIPT'
+#!/bin/bash
+set -e
+
+echo "Waiting for PostgreSQL..."
+for i in {1..30}; do
+  if pg_isready -h postgres -U escolaconnect 2>/dev/null; then
+    echo "PostgreSQL is ready!"
+    break
+  fi
+  echo "Waiting... attempt $i/30"
+  sleep 1
+done
+
+echo "Running database migrations..."
+cd /app/backend-v2
+npx prisma migrate deploy || echo "Migrations already applied"
+
+echo "Seeding database..."
+npx prisma db seed || echo "Database already seeded"
+
+echo "Starting Backend..."
+cd /app/backend-v2
+node dist/index.js &
+BACKEND_PID=$!
+
+echo "Starting Frontend..."  
+cd /app/frontend-v2
+npm run start &
+FRONTEND_PID=$!
+
+echo ""
+echo "============================================"
+echo "  ✅ EscolaConnect V2.0 Running"
+echo "============================================"
+echo ""
+echo "Frontend:  http://localhost:3000"
+echo "Backend:   http://localhost:8001"
+echo "API:       http://localhost:8001/health"
+echo "Database:  http://localhost:8080"
+echo ""
+echo "Credentials:"
+echo "  admin@escolaconnect.com / admin123"
+echo ""
+echo "============================================"
+echo ""
+
+wait $BACKEND_PID $FRONTEND_PID
+SCRIPT
+
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 3000 8001
+
+CMD ["/entrypoint.sh"]

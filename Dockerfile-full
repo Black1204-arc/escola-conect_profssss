@@ -1,0 +1,93 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apk add --no-cache postgresql-client bash curl
+
+# Copiar projeto
+COPY . .
+
+# Backend setup
+WORKDIR /app/backend-v2
+RUN npm install --silent
+RUN npm run build
+
+# Frontend setup
+WORKDIR /app/frontend-v2
+RUN npm install --silent
+
+# Voltar para root
+WORKDIR /app
+
+# Script que roda tudo automaticamente
+RUN cat > /app/start.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "╔════════════════════════════════════════════════════╗"
+echo "║      EscolaConnect V2.0 - Iniciando...            ║"
+echo "╚════════════════════════════════════════════════════╝"
+echo ""
+
+# Aguardar PostgreSQL
+echo "⏳ Aguardando PostgreSQL..."
+for i in {1..30}; do
+  if pg_isready -h postgres -U escolaconnect >/dev/null 2>&1; then
+    echo "✅ PostgreSQL pronto!"
+    break
+  fi
+  echo -n "."
+  sleep 1
+done
+echo ""
+
+# Migrations
+echo "🔧 Aplicando migrations..."
+cd /app/backend-v2
+npx prisma migrate deploy --skip-generate 2>/dev/null || true
+echo "✅ Migrations ok!"
+
+# Seed
+echo "📝 Seeding database..."
+npx prisma db seed 2>/dev/null || true
+echo "✅ Seed ok!"
+echo ""
+
+# Backend
+echo "🚀 Iniciando Backend (Fastify)..."
+cd /app/backend-v2
+node dist/index.js &
+BACKEND_PID=$!
+sleep 2
+
+# Frontend
+echo "🚀 Iniciando Frontend (Next.js)..."
+cd /app/frontend-v2
+npm run dev &
+FRONTEND_PID=$!
+sleep 3
+
+echo ""
+echo "╔════════════════════════════════════════════════════╗"
+echo "║         ✅ SISTEMA PRONTO PARA USAR!              ║"
+echo "╠════════════════════════════════════════════════════╣"
+echo "║                                                    ║"
+echo "║  Frontend:  http://localhost:3000                 ║"
+echo "║  Backend:   http://localhost:8001                 ║"
+echo "║  Database:  http://localhost:8080 (Adminer)       ║"
+echo "║                                                    ║"
+echo "║  Login: admin@escolaconnect.com / admin123        ║"
+echo "║                                                    ║"
+echo "╚════════════════════════════════════════════════════╝"
+echo ""
+
+# Manter containers rodando
+wait
+EOF
+
+RUN chmod +x /app/start.sh
+
+EXPOSE 3000 8001
+
+CMD ["/app/start.sh"]

@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # All-in-one development container
+  app:
+    image: node:20-alpine
+    container_name: escolaconnect-v2-dev
+    working_dir: /app
+    ports:
+      - "3000:3000"   # Frontend
+      - "8001:8001"   # Backend
+      - "5432:5432"   # PostgreSQL
+      - "8080:8080"   # Adminer
+    environment:
+      DATABASE_URL: "postgresql://escolaconnect:escolaconnect123@localhost:5432/escolaconnect"
+      JWT_SECRET: "dev_secret_key_change_in_production_v2"
+      NODE_ENV: development
+      PORT: 8001
+      NEXT_PUBLIC_API_URL: "http://localhost:8001/api"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/frontend-v2/node_modules
+      - /app/backend-v2/node_modules
+      - /app/backend-v2/.next
+    stdin_open: true
+    tty: true
+    command: sh
+    networks:
+      - escolaconnect-v2
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: escolaconnect-postgres
+    environment:
+      POSTGRES_USER: escolaconnect
+      POSTGRES_PASSWORD: escolaconnect123
+      POSTGRES_DB: escolaconnect
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "escolaconnect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - escolaconnect-v2
+
+  # Adminer for database management
+  adminer:
+    image: adminer:latest
+    container_name: escolaconnect-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - escolaconnect-v2
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  escolaconnect-v2:
+    driver: bridge

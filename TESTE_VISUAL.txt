@@ -1,0 +1,318 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   🎓 ESCOLACONNECT - GUIA DE TESTE VISUAL (PASSO A PASSO)   ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 1: Abra o Browser
+───────────────────────────────────────────────────────────────
+
+1. Abra seu navegador (Chrome, Firefox, Safari, Edge)
+2. Digite na barra de endereço:
+   
+   http://localhost:3000
+
+3. Pressione ENTER
+
+┌──────────────────────────────────────────────────────────┐
+│                                                          │
+│   🎓 EscolaConnect                                       │
+│   Sistema de Gestão Escolar                             │
+│                                                          │
+│   [📊 Dashboard] [👥 Usuários] [🎓 Alunos]             │
+│                                                          │
+│   ┌──────────────┐  ┌──────────────┐                   │
+│   │ 👥 Usuários  │  │ 🎓 Alunos    │                   │
+│   │      0       │  │      0       │                   │
+│   └──────────────┘  └──────────────┘                   │
+│   ┌──────────────┐  ┌──────────────┐                   │
+│   │ 📚 Turmas    │  │ 📝 Notas     │                   │
+│   │      0       │  │      0       │                   │
+│   └──────────────┘  └──────────────┘                   │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+✅ Se viu isso, está funcionando!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 2: Criar Primeiro Usuário
+───────────────────────────────────────────────────────────────
+
+1. Clique na aba "👥 Usuários" (botão no topo)
+
+2. Você verá um formulário:
+
+   ┌────────────────────────────────────────────┐
+   │ 🆕 Novo Usuário                            │
+   ├────────────────────────────────────────────┤
+   │ Nome:        [________________]            │
+   │ Email:       [________________]            │
+   │ Função:      [Admin ▼]                     │
+   │              [Adicionar Usuário]           │
+   └────────────────────────────────────────────┘
+
+3. Preencha com:
+   • Nome:    João Silva
+   • Email:   joao@example.com
+   • Função:  Professor (selecione no dropdown)
+
+4. Clique no botão "Adicionar Usuário"
+
+5. Aguarde 1-2 segundos
+
+┌────────────────────────────────────────────┐
+│ Usuários na Tabela:                        │
+├────────────────────────────────────────────┤
+│ João Silva  │ joao@example.com │ Professor │
+└────────────────────────────────────────────┘
+
+✅ Pronto! O usuário apareceu na tabela!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 3: Criar Mais Usuários
+───────────────────────────────────────────────────────────────
+
+Crie o segundo usuário:
+
+   Nome:    Maria Santos
+   Email:   maria@example.com
+   Função:  Admin
+
+Crie o terceiro usuário:
+
+   Nome:    Pedro Alves
+   Email:   pedro@example.com
+   Função:  Aluno
+
+┌────────────────────────────────────────────┐
+│ Tabela Final:                              │
+├────────────────────────────────────────────┤
+│ João Silva  │ joao@...     │ 👨‍🏫 Professor │
+│ Maria Santos│ maria@...    │ 👨‍💼 Admin    │
+│ Pedro Alves │ pedro@...    │ 🎓 Aluno    │
+└────────────────────────────────────────────┘
+
+✅ Agora temos 3 usuários!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 4: Criar Alunos
+───────────────────────────────────────────────────────────────
+
+1. Clique na aba "🎓 Alunos"
+
+2. Você verá outro formulário:
+
+   ┌────────────────────────────────────────┐
+   │ 🆕 Novo Aluno                          │
+   ├────────────────────────────────────────┤
+   │ Nome:        [________________]        │
+   │ Matrícula:   [________________]        │
+   │ Turma:       [________________]        │
+   │              [Adicionar Aluno]         │
+   └────────────────────────────────────────┘
+
+3. Preencha com:
+   • Nome:      Ana Costa
+   • Matrícula: 2024001
+   • Turma:     9º A
+
+4. Clique "Adicionar Aluno"
+
+5. Crie um segundo aluno:
+   • Nome:      Bruno Lima
+   • Matrícula: 2024002
+   • Turma:     9º B
+
+┌────────────────────────────────────────────┐
+│ Tabela de Alunos:                          │
+├────────────────────────────────────────────┤
+│ Ana Costa   │ 2024001 │ 9º A              │
+│ Bruno Lima  │ 2024002 │ 9º B              │
+└────────────────────────────────────────────┘
+
+✅ Agora temos 2 alunos!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 5: Verificar Dashboard Atualizado
+───────────────────────────────────────────────────────────────
+
+1. Clique na aba "📊 Dashboard"
+
+2. Os números devem ter mudado!
+
+ANTES (quando começou):
+   ┌──────────────┐  ┌──────────────┐
+   │ 👥 Usuários  │  │ 🎓 Alunos    │
+   │      0       │  │      0       │
+   └──────────────┘  └──────────────┘
+
+AGORA (após criar dados):
+   ┌──────────────┐  ┌──────────────┐
+   │ 👥 Usuários  │  │ 🎓 Alunos    │
+   │      3       │  │      2       │
+   └──────────────┘  └──────────────┘
+
+✅ As estatísticas atualizaram em tempo real!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 6: Testar Responsividade (Opcional)
+───────────────────────────────────────────────────────────────
+
+1. Pressione F12 (ou Cmd+Option+I no Mac)
+   → DevTools abre no lado direito
+
+2. Clique no ícone de Mobile 📱 (ou Cmd+Shift+M)
+
+3. Selecione "iPhone 12" ou outro celular
+
+4. Veja a UI se ajustar para mobile:
+   ✅ Formulários em coluna única
+   ✅ Botões maiores e mais fáceis de clicar
+   ✅ Tabelas com scroll horizontal
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 7: Testar Hot-Reload (Opcional)
+───────────────────────────────────────────────────────────────
+
+1. Abra seu editor (VS Code, Sublime, etc)
+
+2. Abra o arquivo:
+   frontend/src/App.js
+
+3. Procure pela linha:
+   <h1 className="text-4xl font-bold text-gray-900">
+     🎓 EscolaConnect
+   </h1>
+
+4. Mude para:
+   🎓 EscolaConnect v2.0
+
+5. Salve o arquivo (Ctrl+S)
+
+6. Volte ao browser
+
+7. A página deve recarregar automaticamente e mostrar:
+   🎓 EscolaConnect v2.0
+
+✅ Hot-reload funcionando!
+
+═══════════════════════════════════════════════════════════════
+
+PASSO 8: Testar Persistência (Opcional)
+───────────────────────────────────────────────────────────────
+
+1. Abra o Terminal/PowerShell
+
+2. No Terminal, rode:
+   docker-compose down -v
+
+3. Aguarde terminar (containers param)
+
+4. Rode:
+   docker-compose up -d
+
+5. Abra http://localhost:3000 novamente
+
+6. Verifique se os dados desapareceram (esperado na primeira vez)
+
+7. Crie 1 novo usuário
+
+8. Repita os passos 2-3
+
+9. Reabra http://localhost:3000
+
+✅ O usuário que criou pela segunda vez deve estar lá!
+✅ MongoDB persistiu os dados!
+
+═══════════════════════════════════════════════════════════════
+
+CHECKLIST FINAL
+───────────────────────────────────────────────────────────────
+
+✅ Acessei http://localhost:3000
+✅ Vi o Dashboard com 4 cards
+✅ Criei usuários e apareceram na tabela
+✅ Criei alunos e apareceram na tabela
+✅ Badges de função têm cores diferentes:
+   - Admin (vermelho 👨‍💼)
+   - Professor (azul 👨‍🏫)
+   - Aluno (verde 🎓)
+✅ Dashboard atualizou os números
+✅ Formulários têm validação (não deixam enviar vazio)
+✅ Hot-reload funcionou ao editar arquivo
+✅ UI é responsiva em mobile
+✅ Dados persistem após restart
+
+SE TUDO MARCADO:
+🎉 PARABÉNS! SUA APLICAÇÃO ESTÁ 100% FUNCIONAL!
+
+═══════════════════════════════════════════════════════════════
+
+🚨 ALGO NÃO FUNCIONOU?
+───────────────────────────────────────────────────────────────
+
+Erro 1: "Página em branco quando abre"
+└─ Solução: 
+   docker-compose logs frontend --tail 50
+   Procure por erros na saída
+
+Erro 2: "Clico em Adicionar mas nada acontece"
+└─ Solução:
+   docker-compose logs backend --tail 50
+   Verifique se API está respondendo:
+   curl http://localhost:8001/api/
+
+Erro 3: "Dados não aparecem em tabelas"
+└─ Solução:
+   Abra DevTools (F12)
+   Vá em "Network"
+   Submeta o formulário
+   Procure por requisição GET /api/users
+   Verifique a resposta
+
+Erro 4: "Hot-reload não funciona"
+└─ Solução:
+   docker-compose down
+   docker-compose watch
+   Edite o arquivo e salve
+
+═══════════════════════════════════════════════════════════════
+
+📞 PRECISA DE AJUDA?
+
+Ver logs em tempo real:
+$ docker-compose logs -f
+
+Testar API diretamente:
+$ python test_api.py
+
+Ver comandos disponíveis:
+$ make help
+
+═══════════════════════════════════════════════════════════════
+
+🎯 PRÓXIMAS IDEIAS:
+
+Quando terminar os testes, você pode:
+
+1. Adicionar nova aba "Turmas"
+2. Adicionar nova aba "Notas"
+3. Criar página de Login
+4. Adicionar busca/filtro nas tabelas
+5. Exportar dados em Excel
+6. Enviar email com dados
+7. Deploy na nuvem
+
+═══════════════════════════════════════════════════════════════
+
+Desenvolvido com ❤️ usando Docker + FastAPI + React + MongoDB
+
+═══════════════════════════════════════════════════════════════
